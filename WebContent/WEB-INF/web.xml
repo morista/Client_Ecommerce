@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+<welcome-file-list>
+    <welcome-file>accueil</welcome-file>
+</welcome-file-list>
   <servlet>
     <servlet-name>CreationClient</servlet-name>
     <servlet-class>site.commerce.servlets.CreationClient</servlet-class>
@@ -20,6 +23,10 @@
     <servlet-name>Paniers</servlet-name>
     <servlet-class>site.commerce.servlets.Paniers</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>supprimeArticlePanier</servlet-name>
+    <servlet-class>site.commerce.servlets.SupprimeArticle</servlet-class>
+  </servlet>
   
   <servlet>
   	<servlet-name>Connecter</servlet-name>
@@ -33,6 +40,10 @@
   <servlet-mapping>
     <servlet-name>Paniers</servlet-name>
     <url-pattern>/monPanier</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>supprimeArticlePanier</servlet-name>
+    <url-pattern>/supprimeArticlePanier</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AfficherProduit</servlet-name>

@@ -1,3 +1,4 @@
+
 package site.commerce.servlets;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class AfficherProduit extends HttpServlet {
 		produit.setType(request.getParameter("typeP"));
 		produit.setFournisseur(request.getParameter("fournisseur"));
 		
-		// Récupération montants et nombre vendu:
+		// Rï¿½cupï¿½ration montants et nombre vendu:
 		float montantAchat;
 		float montantVente;
 		int vendu;

@@ -6,10 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 import site.commerce.beans.CategoryProduit;
 
 public class Category {
@@ -19,7 +15,7 @@ public class Category {
 	public List<CategoryProduit> recupererCategory(){
 		List<CategoryProduit> category = new ArrayList<CategoryProduit>();
 		
-		//Connexion à la base
+		//Connexion a la base
 		
 		java.sql.Statement  statement = null;
 		ResultSet resultat = null;
@@ -30,7 +26,7 @@ public class Category {
 			
 			resultat = statement.executeQuery("SELECT  Id, Nom, Description FROM categories");
 			
-			//Récupération des données
+			//Rï¿½cupï¿½ration des donnï¿½es
 			while(resultat.next()){
 				int id 		= resultat.getInt("Id");
 				String nom = resultat.getString("Nom");

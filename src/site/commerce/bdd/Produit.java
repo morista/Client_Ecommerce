@@ -8,10 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class Produit {
 	
 	private java.sql.Connection connexion;
@@ -21,7 +17,7 @@ public class Produit {
 		//Array des produits
 		List<site.commerce.beans.Produit> produits = new ArrayList<site.commerce.beans.Produit>();
 		/**
-		 * Récupération de l'Id du catégorie 
+		 * Rï¿½cupï¿½ration de l'Id du catï¿½gorie 
 		 */
 		String idCategory = request.getParameter("idCategory");
 		int valeurId = Integer.parseInt(idCategory);
@@ -32,7 +28,7 @@ public class Produit {
 			
 		}
 		
-		//Connexion à la base
+		//Connexion ï¿½ la base
 		
 		java.sql.Statement  statement = null;
 		ResultSet resultat = null;
@@ -41,18 +37,20 @@ public class Produit {
 				
 			statement = connexion.createStatement();
 			
-			java.sql.PreparedStatement prepare = connexion.prepareStatement("SELECT p.NomP, p.MontantVente, f.Nom FROM produits AS p INNER JOIN categories AS c ON p.Categorie = c.Id INNER JOIN fournisseurs AS f ON p.FournisseurP = f.Id WHERE p.Categorie = ?");
+			java.sql.PreparedStatement prepare = connexion.prepareStatement("SELECT p.Id, p.NomP, p.MontantVente, f.Nom FROM produits AS p INNER JOIN categories AS c ON p.Categorie = c.Id INNER JOIN fournisseurs AS f ON p.FournisseurP = f.Id WHERE p.Categorie = ?");
 					prepare.setInt(1, valeurId);
 					resultat = prepare.executeQuery();
-			//Récupération des données
+			//Rï¿½cupï¿½ration des donnï¿½es
 			while(resultat.next()){
+				int id = resultat.getInt("p.Id");
 				String nom = resultat.getString("p.NomP");
 				float  montantVente = resultat.getFloat("p.MontantVente");
 				String fournisseur  = resultat.getString("f.Nom");
 				
 				
-				// Instanciation de la classe mor.form.beans.Produit
+				// Instanciation de la classe site.commerce.beans.Produit
 				site.commerce.beans.Produit produit = new site.commerce.beans.Produit();
+				produit.setId(id);
 				produit.setNom(nom);
 				produit.setMontantVente(montantVente);
 				produit.setFournisseur(fournisseur);
@@ -75,6 +73,59 @@ public class Produit {
 		return produits;
 	}
 	
+	public site.commerce.beans.Produit recupererUnProduit(HttpServletRequest request){ // Fonction pour avoir la liste des produits
+
+		site.commerce.beans.Produit produit = new site.commerce.beans.Produit();
+
+		String idProduit = request.getParameter("idP");
+		int valeurId = Integer.parseInt(idProduit);
+		//Chargement driver
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+		}catch(ClassNotFoundException e){
+			
+		}
+		
+		java.sql.Statement  statement = null;
+		ResultSet resultat = null;
+		loadDatabase();
+		try{
+			
+			statement = connexion.createStatement();
+			
+			java.sql.PreparedStatement prepare = connexion.prepareStatement("SELECT p.Id, p.NomP, p.MontantVente, f.Nom FROM produits AS p INNER JOIN categories AS c ON p.Categorie = c.Id INNER JOIN fournisseurs AS f ON p.FournisseurP = f.Id WHERE p.Id = ?");
+					prepare.setInt(1, valeurId);
+					resultat = prepare.executeQuery();
+			//Rï¿½cupï¿½ration des donnï¿½es
+			while(resultat.next()){
+				int id = resultat.getInt("p.Id");
+				String nom = resultat.getString("p.NomP");
+				float  montantVente = resultat.getFloat("p.MontantVente");
+				String fournisseur  = resultat.getString("f.Nom");
+				
+				
+				// Instanciation de la classe site.commerce.beans.Produit
+				produit.setId(id);
+				produit.setNom(nom);
+				produit.setMontantVente(montantVente);
+				produit.setFournisseur(fournisseur);
+			}
+		}catch(SQLException e){
+			
+		} finally {
+			//Fermeture connexion
+			try{
+				if(resultat != null) resultat.close();
+				if(statement != null) statement.close();
+				if(connexion != null) connexion.close();
+			}catch(SQLException ignore){
+				
+			}
+		}
+		
+		return produit;
+	}
+	
     public void ajouterProduit(site.commerce.beans.Produit produits) {
         loadDatabase();
         
@@ -93,6 +144,7 @@ public class Produit {
             e.printStackTrace();
         }
     }
+    
 	
     private void loadDatabase() {
         // Chargement du driver

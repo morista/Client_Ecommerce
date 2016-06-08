@@ -2,6 +2,7 @@ package site.commerce.beans;
 
 public class Produit {
 	
+	private int id;
 	private String type;
 	private float montantAchat;
 	private float montantVente;
@@ -9,6 +10,12 @@ public class Produit {
 	private String fournisseur;
 	private String nom;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getNom() {
 		return nom;
 	}

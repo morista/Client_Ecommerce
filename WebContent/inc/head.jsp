@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,8 +22,33 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-           <li> <a href="<c:url value="/connexion"/>"><span class="glyphicon glyphicon-user"></span>  Connecter </a> </li>
-          <li> <a href="<c:url value="/monPanier"/>"><span class="glyphicon glyphicon-shopping-cart"></span>  Panier </a> </li>
+          
+           	<c:choose>
+				<c:when test="${!empty sessionScope.userSession}">
+					<li> <a href="#"><span class="glyphicon glyphicon-user"></span> <c:out value="${sessionScope.userSession.login}" /> </a> </li>
+					<li> <a href="<c:url value="/deconnexion"/>"> Deconnexion </a> </li>
+				</c:when>
+				<c:otherwise>
+					<li> <a href="<c:url value="/connexion"/>"><span class="glyphicon glyphicon-user"></span>  Connecter </a> </li>
+				</c:otherwise>
+			</c:choose>          
+			
+		
+           	<c:choose>
+				<c:when test="${!empty sessionScope.produitPanier}">
+				
+					<c:set var="total" value="${0}"/>
+					<c:forEach var="article" items="${sessionScope.produitPanier}">
+					    <c:set var="total" value="${total + article.quantite}" />
+					</c:forEach>
+					<li> <a href="<c:url value="/monPanier"/>"><span class="glyphicon glyphicon-shopping-cart"></span>  Panier <span class="badge"><c:out value="${total}"/></span></a> </li>
+				</c:when>
+				<c:otherwise>
+					<li> <a href="<c:url value="/monPanier"/>"><span class="glyphicon glyphicon-shopping-cart"></span>  Panier </a> </li>
+				</c:otherwise>
+			</c:choose> 
+           
+          
           <li> <a href="#" ><span class="glyphicon glyphicon-bullhorn"></span>  Besoin d'aide</a> </li>
           
           </ul>

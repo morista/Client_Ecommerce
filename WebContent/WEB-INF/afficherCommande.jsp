@@ -1,18 +1,7 @@
+<c:import url="/inc/head.jsp" />
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Affichage d'une commande</title>
-        <link href="DOC/bootstrap.min.css" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="<c:url value="/inc/style.css"/>" />
-    </head>
-    <body class="container">
-    	<c:import url="/head.jsp"></c:import>
-        <c:import url="/inc/menu.jsp" />
         <div id="corps">
-            <p class="info">${ message }</p>
-            <c:if test="${ !erreur }">
+            <p class="info"></p>
                 <p>Client</p>
                 <p>Nom : <c:out value="${ client.getNomClient() }"/></p>
                 <p>Prénom : <c:out value="${ client.getPrenomClient() }"/></p>
@@ -26,7 +15,10 @@
                 <p>Statut du paiement  : <c:out value="${ commande.getStatutPaiement() }"/></p> 
                 <p>Mode de livraison  : <c:out value="${ commande.getModeLivraison() }"/></p> 
                 <p>Statut de la livraison  : <c:out value="${ commande.getStatutLivraison() }"/></p> 
-            </c:if>
         </div>
-    </body>
+
+</div>
+</div>
+
+</body>
 </html>
